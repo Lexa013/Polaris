@@ -16,7 +16,15 @@ namespace Polaris.Categories
         [RequirePermissions(Permissions.Administrator)]
         public async Task say(CommandContext ctx, DiscordChannel channel, [RemainingText] string msg)
         {
-            await channel.SendMessageAsync(msg);
+            try
+            {
+                await channel.SendMessageAsync(msg);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

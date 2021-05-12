@@ -9,11 +9,10 @@ namespace Polaris.Handlers
 {
     public class Reactions
     {
-        private Config _config;
-        
+
         public async Task ReactionAdded(DiscordClient sender, MessageReactionAddEventArgs e)
         {
-            if (_config.Guilds[e.Guild.Id].rulesmessage != 0 && e.Message.Id == _config.Guilds[e.Guild.Id].rulesmessage)
+            if (GuildConfig.Guilds[e.Guild.Id].rulesmessage != 0 && e.Message.Id == GuildConfig.Guilds[e.Guild.Id].rulesmessage)
             {
                 var member = (DiscordMember) e.User;
                 try
@@ -30,7 +29,7 @@ namespace Polaris.Handlers
 
         public async Task ReactionRemoved(DiscordClient sender, MessageReactionRemoveEventArgs e)
         {
-            if (_config.Guilds[e.Guild.Id].rulesmessage != 0 && e.Message.Id == _config.Guilds[e.Guild.Id].rulesmessage)
+            if (GuildConfig.Guilds[e.Guild.Id].rulesmessage != 0 && e.Message.Id == GuildConfig.Guilds[e.Guild.Id].rulesmessage)
             {
                 var member = (DiscordMember) e.User;
                 try
@@ -47,7 +46,6 @@ namespace Polaris.Handlers
 
         public Reactions(Config config)
         {
-            _config = config;
         }
     }
 }

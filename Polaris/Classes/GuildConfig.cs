@@ -1,9 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using DatabaseWrapper.Core;
+using DSharpPlus.Entities;
+using Newtonsoft.Json;
 
 namespace Polaris.Classes
 {
     public class GuildConfig
     {
+        public static Dictionary<ulong, GuildConfig> Guilds = new();
+        
         /// <summary>
         /// Returs 0 or 1 if a server is configured
         /// </summary>

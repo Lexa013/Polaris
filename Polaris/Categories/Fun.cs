@@ -1,13 +1,8 @@
 ﻿using System;
-using System.ComponentModel;
-using Newtonsoft.Json;
-using Polaris.Classes;
 using System.Threading.Tasks;
-using Polaris.Enums;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using unirest_net.http;
 
 namespace Polaris.Categories
 {

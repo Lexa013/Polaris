@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Polaris.Classes
 {
-    public class Database
+    public class DatabaseConfig
     {
         [JsonProperty("host")]
         public string Host { get; set; }
@@ -24,7 +24,7 @@ namespace Polaris.Classes
     public class Config
     {
         [JsonProperty("database")]
-        private Database _database { get; set; }
+        private DatabaseConfig _database { get; set; }
         
         [JsonProperty("prefix")]
         public string Prefix { get; set; }

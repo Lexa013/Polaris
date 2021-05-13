@@ -8,10 +8,11 @@ namespace Polaris.Categories
 {
     public class Fun : BaseCommandModule
     {
-        // public Joke Joke { private get; set;} // TODO Use Depency Injection
+        // TODO Use Depency Injection
+        // public Joke Joke { private get; set;}
         
         [Command("lovetest"), Aliases("love", "lt"), RequireGuild]
-        public async Task lovetest(CommandContext ctx, DiscordMember member)
+        public async Task Lovetest(CommandContext ctx, DiscordMember member)
         {
             Random random = new Random();
 

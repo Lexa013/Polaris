@@ -24,7 +24,7 @@ namespace Polaris.Categories
                 return;
             
             var _guild = GuildConfig.Guilds[ctx.Guild.Id];
-            
+
             Dictionary<string, string> _details = new()
             {
                 {":scroll: Rules message ID", _guild.rulesmessage == 0 ? ":x:" : $":white_check_mark: ({_guild.rulesmessage})"},
@@ -44,14 +44,15 @@ namespace Polaris.Categories
             await ctx.RespondAsync(embed: embed);
         }
         
-        [Command("rules"), RequireGuild, RequirePermissions(Permissions.Administrator)]
+        [Command("rules"), RequireGuild, RequireUserPermissions(Permissions.ManageGuild )]
         public async Task RulesID(CommandContext ctx, DiscordMessage message)
         {
             var newconfig = GuildConfig.Guilds[ctx.Guild.Id];
 
             if (message.Channel.Guild.Equals(ctx.Guild))
             {
-                newconfig.rulesmessage = message.Id; // TODO If arg(message) equals -1 then newconfig.rulesmessage = -1
+                // TODO If arg(message) equals -1 then newconfig.rulesmessage = -1
+                newconfig.rulesmessage = message.Id;
                 GuildManager.UpdateGuildConfig(ctx.Guild, newconfig);
                 return;
                 
@@ -60,7 +61,7 @@ namespace Polaris.Categories
             await ctx.RespondAsync(":x: Cannot configure a message wich isn't in this guild");
         }
         
-        [Command("welcome"), RequireGuild]
+        [Command("welcome"), RequireGuild, RequireUserPermissions(Permissions.ManageGuild)]
         public async Task WelcomeChannel(CommandContext ctx, DiscordChannel channel)
         {
             var newconfig = GuildConfig.Guilds[ctx.Guild.Id];

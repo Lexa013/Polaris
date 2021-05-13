@@ -44,7 +44,7 @@ namespace Polaris.Handlers
             }
         }
 
-        public Reactions(Config config)
+        public Reactions()
         {
         }
     }

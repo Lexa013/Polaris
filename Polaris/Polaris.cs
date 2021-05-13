@@ -36,7 +36,7 @@ namespace Polaris
 
             var errors = new Errors();
             var ready = new Started();
-            var reactions = new Reactions(Config);
+            var reactions = new Reactions();
             var actions = new Actions(guildManager);
             
             var services = new ServiceCollection()

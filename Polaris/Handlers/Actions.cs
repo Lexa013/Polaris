@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DatabaseWrapper.Core;
 using DatabaseWrapper.Mysql;
@@ -16,38 +17,54 @@ namespace Polaris.Handlers
     public class Actions
     {
         
-        private GuildManager guildManager;
+        private GuildManager _guildManager;
 
         public Task GuildJoined(DiscordClient sender, GuildCreateEventArgs e)
         {
-            guildManager.AddGuildConfig(e.Guild);
+            _guildManager.AddGuildConfig(e.Guild);
             
             return null;
         }
 
         public Task GuildDeleted(DiscordClient sender, GuildDeleteEventArgs e)
         {
-            guildManager.DeleteGuildConfig(e.Guild);
+            _guildManager.DeleteGuildConfig(e.Guild.Id);
             
             return null;
         }
 
         public async Task GuildDownloadCompleted(DiscordClient sender, GuildDownloadCompletedEventArgs e)
         {
-            var result = guildManager.getGuildsConfigs();
-            
-            Console.WriteLine($"Config rows count: {result.Rows.Count}");
+            // Get guilds configs stored in the database
+            var result = _guildManager.GetGuildsConfigs();
 
+            // Add them to a static dictionary <ulong guildid, GuildConfig guildconfig>
             for (int i = 0; i < result.Rows.Count; i++)
             {
-                GuildConfig.Guilds.Add(Convert.ToUInt64(result.Rows[i].ItemArray.GetValue(0)),
-                    JsonConvert.DeserializeObject<GuildConfig>(result.Rows[i].ItemArray.GetValue(1).ToString()));
+                var guildId = Convert.ToUInt64(result.Rows[i].ItemArray.GetValue(0));
+                var guildConfig =
+                    JsonConvert.DeserializeObject<GuildConfig>(result.Rows[i].ItemArray.GetValue(1).ToString());
+                
+                GuildConfig.Guilds.Add(guildId, guildConfig);
+
+                // Delete guild config if the bot isn't on the server in case if the bot is off
+                if (!sender.Guilds.Keys.Contains(guildId))
+                    _guildManager.DeleteGuildConfig(guildId);
             }
+            
+            // Add guild config if the guild config isn't in the database in case if the bot is off
+            foreach (var guild in sender.Guilds)
+            {
+                if (!GuildConfig.Guilds.ContainsKey(guild.Key))
+                    _guildManager.AddGuildConfig(guild.Value);
+            }
+            
+            Console.WriteLine($"Config rows count: {GuildConfig.Guilds.Count}");
         }
         
         public Actions(GuildManager guildManager)
         {
-            this.guildManager = guildManager;
+            _guildManager = guildManager;
         }
     }
 }

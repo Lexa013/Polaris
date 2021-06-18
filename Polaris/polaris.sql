@@ -2,6 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               10.5.9-MariaDB-1:10.5.9+maria~focal - mariadb.org binary distribution
 -- Server OS:                    debian-linux-gnu
+-- HeidiSQL Version:             11.2.0.6213
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -23,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `guilds` (
   `config` text DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `guildid` (`guildid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 -- Data exporting was unselected.
 

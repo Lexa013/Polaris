@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `guilds` (
   `config` text DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `guildid` (`guildid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 -- Data exporting was unselected.
 

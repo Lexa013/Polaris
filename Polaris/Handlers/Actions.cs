@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DatabaseWrapper.Core;
-using DatabaseWrapper.Mysql;
 using DSharpPlus;
 using DSharpPlus.EventArgs;
-using GameCore;
 using Newtonsoft.Json;
-using Polaris.Classes;
+using Polaris.Models;
 using Polaris.Managers;
 using Console = System.Console;
 

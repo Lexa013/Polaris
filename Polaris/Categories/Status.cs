@@ -12,14 +12,15 @@ namespace Polaris.Categories
     {
         [Command("minecraft")]
         [Aliases("mc")]
-        public async Task Minecraft(CommandContext ctx, string ip, int port=25565)
+        [Description("Get the status of a minecraft server")]
+        public async Task Minecraft(CommandContext ctx, [Description("IP adress")] string ip, [Description("Port")] int port=25565)
         {
             MineStat m = new MineStat(ip, (ushort) port);
 
             if (!m.ServerUp)
             {
                 await ctx.Channel.SendMessageAsync(
-                    embed: new DiscordEmbedBuilder()
+                    new DiscordEmbedBuilder()
                         .WithTitle(":warning: Unable to reach the server")
                         .WithColor(new DiscordColor("#e74c3c"))
                         .WithFooter($"Requested by {ctx.Message.Author.Username}", ctx.Message.Author.AvatarUrl)

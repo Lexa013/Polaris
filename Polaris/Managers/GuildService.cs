@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using DatabaseWrapper.Core;
-using DatabaseWrapper.Mysql;
 using DSharpPlus.Entities;
 using Newtonsoft.Json;
-using Polaris.Classes;
+using Polaris.Models;
 
 namespace Polaris.Managers
 {
@@ -14,12 +13,14 @@ namespace Polaris.Managers
 
         public void AddGuildConfig(DiscordGuild guild)
         {
+            var newconfig = new GuildConfig();
+            
             var values = new Dictionary<string, object>();
             values.Add("guildid", guild.Id);
-            values.Add("config", JsonConvert.SerializeObject(new GuildConfig(0)));
+            values.Add("config", JsonConvert.SerializeObject(newconfig));
             _config.Database.Insert("guilds", values);
             
-            GuildConfig.Guilds.Add(guild.Id, new GuildConfig(0));
+            GuildConfig.Guilds.Add(guild.Id, newconfig);
         }
 
         public void UpdateGuildConfig(DiscordGuild discordGuild, GuildConfig newGuildConfig)

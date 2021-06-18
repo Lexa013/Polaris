@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
-using Polaris.Classes;
+using Polaris.Models;
 
 namespace Polaris.Handlers
 {
@@ -12,40 +12,34 @@ namespace Polaris.Handlers
 
         public async Task ReactionAdded(DiscordClient sender, MessageReactionAddEventArgs e)
         {
-            if (GuildConfig.Guilds[e.Guild.Id].rulesmessage != 0 && e.Message.Id == GuildConfig.Guilds[e.Guild.Id].rulesmessage)
+            var config = GuildConfig.Guilds[e.Guild.Id];
+
+            if (config.rulesmessage is not null && e.Message == GuildConfig.Guilds[e.Guild.Id].rulesmessage)
             {
                 var member = (DiscordMember) e.User;
+
                 try
                 {
-                    await member.GrantRoleAsync(e.Guild.GetRole(834433733578719312));
+                    await member.GrantRoleAsync(config.verifiedrole);
                 }
-                catch (Exception exception)
-                {
-                    Console.WriteLine(exception);
-                    throw;
-                }
+                catch { }
             }
         }
 
         public async Task ReactionRemoved(DiscordClient sender, MessageReactionRemoveEventArgs e)
         {
-            if (GuildConfig.Guilds[e.Guild.Id].rulesmessage != 0 && e.Message.Id == GuildConfig.Guilds[e.Guild.Id].rulesmessage)
+            var config = GuildConfig.Guilds[e.Guild.Id];
+            
+            if (config.rulesmessage is not null && e.Message == config.rulesmessage)
             {
                 var member = (DiscordMember) e.User;
+
                 try
                 {
-                    await member.RevokeRoleAsync(e.Guild.GetRole(834433733578719312));
+                    await member.RevokeRoleAsync(config.verifiedrole);
                 }
-                catch (Exception exception)
-                {
-                    Console.WriteLine(exception);
-                    throw;
-                }
+                catch { }
             }
-        }
-
-        public Reactions()
-        {
         }
     }
 }

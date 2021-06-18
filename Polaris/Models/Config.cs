@@ -1,7 +1,7 @@
 ﻿using DatabaseWrapper.Mysql;
 using Newtonsoft.Json;
 
-namespace Polaris.Classes
+namespace Polaris.Models
 {
     public class DatabaseConfig
     {
@@ -24,16 +24,24 @@ namespace Polaris.Classes
     public class Config
     {
         [JsonProperty("database")]
-        private DatabaseConfig _database { get; set; }
+        private DatabaseConfig _Database { get; set; }
         
         [JsonProperty("prefix")]
         public string Prefix { get; set; }
         
         [JsonProperty("token")]
         public string Token { get; set; }
+        
+        [JsonProperty("botowner")]
+        public string botowner { get; set; }
 
         [JsonIgnore]
-        public DatabaseClient Database => new DatabaseClient(_database.Host, _database.Port, _database.Username,
-            _database.Password, _database.DatabaseName);
+        public DatabaseClient Database { get; set; }
+
+        public void Init()
+        {
+            Database = new DatabaseClient(_Database.Host, _Database.Port, _Database.Username,
+                _Database.Password, _Database.DatabaseName);
+        }
     }
 }

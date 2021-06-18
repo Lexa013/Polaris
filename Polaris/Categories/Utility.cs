@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.CommandsNext.Entities;
 using DSharpPlus.Entities;
 
 namespace Polaris.Categories
 {
     public class Utility : BaseCommandModule
     {
-        [Command("say"), RequireGuild, RequireUserPermissions(Permissions.ManageMessages),]
-        [RequirePermissions(Permissions.Administrator)]
-        public async Task say(CommandContext ctx, DiscordChannel channel, [RemainingText] string msg)
+        [Command("say"), Description("Say a message in a channel"), RequireGuild, RequirePermissionsAttribute(Permissions.ManageMessages)]
+        public async Task say(CommandContext ctx, [Description("The channel")] DiscordChannel channel, [RemainingText, Description("Message")] string msg)
         {
             try
             {
@@ -22,7 +18,7 @@ namespace Polaris.Categories
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(e);                   
                 throw;
             }
         }

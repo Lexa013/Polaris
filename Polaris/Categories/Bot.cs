@@ -6,7 +6,7 @@ using Polaris.Models;
 
 namespace Polaris.Categories
 {
-    [Group("Bot"), Description("Commands related to the bot"), Hidden]
+    [Group("Bot"), Description("Commands related to the bot")]
     public class Bot : BaseCommandModule
     {
         [Command("restart"), Aliases("reboot"), Description("Restart the bot"), RequireOwner]
